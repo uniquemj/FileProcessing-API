@@ -1,4 +1,5 @@
 import fs from 'fs/promises'
+import path from 'path'
 
 const countWords = async (filePath: string) =>{
     const counter_dict = {}
@@ -23,4 +24,15 @@ export const writeFileWithCount = async(sourceFilePath:string) =>{
     } catch(e:any) {
         return e.message
     }
+}
+
+export const filterFile = async (fileName: string) =>{
+    const folderPath = path.join(process.cwd(),'uploads')
+    
+    const files= await fs.readdir(folderPath)
+    
+    const file = files.filter((f) => {
+        return f.startsWith(`${fileName}`)    
+    })
+    return {folderPath, file}
 }
